@@ -235,8 +235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5f7143a47461b49b2e0ca5f6ecbeb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Width: 9
-  Heigth: 15
+  Width: 5
+  Heigth: 11
   TilePrefab: {fileID: 1021676837047052194, guid: c3cfc5be7a242dd4aa6ded1881154dcb, type: 3}
   Candies:
   - {fileID: 7383887318018120682, guid: b4bae89bcdc304d4cb59f3111b1b6d60, type: 3}

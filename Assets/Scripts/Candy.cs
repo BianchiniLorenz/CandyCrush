@@ -32,6 +32,7 @@ public class Candy : MonoBehaviour
         Column = TargetX;
         PrevColumn = Column;
         PrevRow = Row;
+        FindMatches();
     }
 
     void Update()
@@ -63,11 +64,10 @@ public class Candy : MonoBehaviour
             m_gameBoard.AllCandies[Column, Row] = gameObject;
         }
 
-        FindMatches();
+        
         if (m_isMatched)
         {
-            TryGetComponent(out SpriteRenderer sprite);
-            sprite.color = new Color(0, 0, 0, 0.2f);
+            StartCoroutine(DestroyCandy());
         }
     }
 
@@ -119,6 +119,7 @@ public class Candy : MonoBehaviour
             candy.Row++;
         }
         StartCoroutine(CheckMove());
+        FindMatches();
     }
 
     public IEnumerator CheckMove()
@@ -142,7 +143,7 @@ public class Candy : MonoBehaviour
         if(Column > 0 && Column < m_gameBoard.Width -1)
         {
             GameObject rightCandy = m_gameBoard.AllCandies[Column+1, Row];
-            rightCandy.TryGetComponent(out Candy Rcandy);
+            rightCandy.TryGetComponent(out Candy Rcandy); 
             GameObject leftCandy = m_gameBoard.AllCandies[Column-1, Row];
             leftCandy.TryGetComponent(out Candy Lcandy);
             if (Lcandy.Color == Color && Rcandy.Color == Color)
@@ -166,6 +167,15 @@ public class Candy : MonoBehaviour
                 m_isMatched = true;
             }
         }
+    }
+
+    IEnumerator DestroyCandy()
+    {
+        TryGetComponent(out SpriteRenderer sprite);
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.3f);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+        StartCoroutine(m_gameBoard.CollapsRow());
     }
 
 
